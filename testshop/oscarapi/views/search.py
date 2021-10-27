@@ -37,18 +37,9 @@ class SearchView(APIView):
     def get(self,request,format=None,**kwargs):
         
         search_filter = self.request.GET.get('q')
-
         prods = SearchQuerySet().filter(title=search_filter).facet('product_class')
-
         facet = prods.facet_counts()
-
         serializer = SearchSerializer(prods,many=True)     
 
         return Response({'Response':serializer.data, 'Facet Response':facet})
     
-
-
-    # def post(self,request,*args,**kwargs):
-    #     cc
-    #     postdata = request.POST.copy()
-    #     print(postdata)
